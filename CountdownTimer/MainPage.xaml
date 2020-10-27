@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="CountdownTimer.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CountdownTimer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <!--<TextBox Grid.Row="0" Text="{x:Bind CountdownTask.Name, Mode=TwoWay}"/>
+        <TextBlock Grid.Row="1" Text="{x:Bind CountdownTask.Name, Mode=OneWay}"/>-->
+        <!--<TextBlock Grid.Row="2" Text="{x:Bind CountdownTask.CurrentTime, Mode=OneWay}"/>-->
+        <TextBlock Grid.Row="0" Text="{x:Bind CountdownTask.CurrentTime, Mode=OneWay}" FontFamily="../Assets/#SF Digital Readout Heavy (TrueType)" Foreground="Red" FontSize="288" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Grid.Row="1"  Content="Reset" FontSize="72" Background="Maroon" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+    </Grid>
+</Page>
