@@ -124,6 +124,7 @@
     </Compile>
     <Compile Include="Models\CameraCapture.cs" />
     <Compile Include="Models\CountdownTask.cs" />
+    <Compile Include="Models\IoTControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\NotificationBase.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
@@ -167,9 +168,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\SFDigitalReadout-Heavy.ttf" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

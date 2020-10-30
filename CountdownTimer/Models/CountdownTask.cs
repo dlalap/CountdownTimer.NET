@@ -10,5 +10,6 @@ namespace CountdownTimer.Models
     {
         public string Name { get; set; }
         public string CurrentTime { get; set; }
+        public int DisplaySize { get; set; }
     }
 }

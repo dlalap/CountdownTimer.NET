@@ -127,8 +127,8 @@ namespace CountdownTimer.Models
 
             if ( softwareBitmap != null )
             {
-                if ( softwareBitmap.BitmapPixelFormat != Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8 ||
-                    softwareBitmap.BitmapAlphaMode != Windows.Graphics.Imaging.BitmapAlphaMode.Premultiplied )
+                if ( softwareBitmap.BitmapPixelFormat != BitmapPixelFormat.Bgra8 ||
+                    softwareBitmap.BitmapAlphaMode != BitmapAlphaMode.Premultiplied )
                 {
                     softwareBitmap = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
                 }
@@ -215,9 +215,12 @@ namespace CountdownTimer.Models
 
         private void AutoStopCamera(object sender, ElapsedEventArgs args)
         {
-            var vidFrame = frameQueue[frameQueue.Count - 1];
-            ProcessFrame(vidFrame);
-            _ = Task.Run(() => frameReader.StopAsync( ));
+            if (frameQueue.Count > 1)
+            {
+                var vidFrame = frameQueue[frameQueue.Count - 1];
+                ProcessFrame(vidFrame);
+                _ = Task.Run(() => frameReader.StopAsync( ));
+            }
             frameQueue.Clear( );
             autoStopCamera.Stop( );
         }

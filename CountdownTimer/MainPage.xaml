@@ -17,9 +17,13 @@
         <!--<TextBox Grid.Row="0" Text="{x:Bind CountdownTask.Name, Mode=TwoWay}"/>
         <TextBlock Grid.Row="1" Text="{x:Bind CountdownTask.Name, Mode=OneWay}"/>-->
         <!--<TextBlock Grid.Row="2" Text="{x:Bind CountdownTask.CurrentTime, Mode=OneWay}"/>-->
-        <Border Grid.Row="0" VerticalAlignment="Stretch" Background="White">
-            <TextBlock Grid.Row="0" Text="{x:Bind CountdownTask.CurrentTime, Mode=OneWay}" FontFamily="SF Digital Readout" FontWeight="Bold" Foreground="Red" FontSize="400" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Border Grid.Row="0" VerticalAlignment="Stretch" Background="Black">
+            <Viewbox>
+                <TextBlock Grid.Row="0" Text="{x:Bind CountdownTask.CurrentTime, Mode=OneWay}" FontFamily="SF Digital Readout" FontWeight="Bold" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center">
+                </TextBlock>
+            </Viewbox>
         </Border>
-        <Button Grid.Row="1"  Content="Reset" FontSize="72" Background="Maroon" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{x:Bind Path=CountdownTask.ButtonClick}"/>
+        <Button Grid.Row="1"  Content="Reset" FontFamily="Impact Label Reversed" FontSize="100" Background="Maroon" Style="{ThemeResource ButtonRevealStyle}" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{x:Bind Path=CountdownTask.ButtonClick}"/>
+        <!--<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Content="Button Content" Style="{ThemeResource ButtonRevealStyle}"/>-->
     </Grid>
 </Page>
