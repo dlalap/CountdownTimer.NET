@@ -8,16 +8,18 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="Black">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         
         <!--<TextBox Grid.Row="0" Text="{x:Bind CountdownTask.Name, Mode=TwoWay}"/>
         <TextBlock Grid.Row="1" Text="{x:Bind CountdownTask.Name, Mode=OneWay}"/>-->
         <!--<TextBlock Grid.Row="2" Text="{x:Bind CountdownTask.CurrentTime, Mode=OneWay}"/>-->
-        <TextBlock Grid.Row="0" Text="{x:Bind CountdownTask.CurrentTime, Mode=OneWay}" FontFamily="../Assets/#SF Digital Readout Heavy (TrueType)" Foreground="Red" FontSize="288" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Button Grid.Row="1"  Content="Reset" FontSize="72" Background="Maroon" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Border Grid.Row="0" VerticalAlignment="Stretch" Background="White">
+            <TextBlock Grid.Row="0" Text="{x:Bind CountdownTask.CurrentTime, Mode=OneWay}" FontFamily="SF Digital Readout" FontWeight="Bold" Foreground="Red" FontSize="400" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+        <Button Grid.Row="1"  Content="Reset" FontSize="72" Background="Maroon" Foreground="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{x:Bind Path=CountdownTask.ButtonClick}"/>
     </Grid>
 </Page>

@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using CountdownTimer.Models;
+using Microsoft.VisualStudio.PlatformUI;
+using Prism.Commands;
 
 namespace CountdownTimer.ViewModels
 {
@@ -16,15 +20,19 @@ namespace CountdownTimer.ViewModels
         private DateTime _future;
         private bool timerActive;
         private CancellationTokenSource _token;
+        private CameraCapture cameraCapture;
 
         public TaskViewModel()
         {
+            cameraCapture = new CameraCapture( );
             _task = new CountdownTask( );
             _future = DateTime.Now.AddMinutes(15);
             timerActive = true;
             _token = new CancellationTokenSource( );
-
-            Task.Factory.StartNew(() => RunTimer(_token.Token), TaskCreationOptions.LongRunning);
+#pragma warning disable VSTHRD101 // Avoid unsupported async delegates
+            ButtonClick = new DelegateCommand(async () => await ResetTimerAsync());
+#pragma warning restore VSTHRD101 // Avoid unsupported async delegates
+            Task.Factory.StartNew(async () => await RunTimerAsync(_token.Token), TaskCreationOptions.LongRunning);
         }
 
         public string Name
@@ -45,7 +53,15 @@ namespace CountdownTimer.ViewModels
             }
         }
 
-        public async void RunTimer( CancellationToken _token )
+        public DelegateCommand ButtonClick { get; set; }
+
+        private async Task ResetTimerAsync()
+        {
+            _future = DateTime.Now.AddMinutes(15);
+            await cameraCapture.CaptureImageAsync( );
+        }
+
+        public async Task RunTimerAsync( CancellationToken _token )
         {
             while ( true )
             {
