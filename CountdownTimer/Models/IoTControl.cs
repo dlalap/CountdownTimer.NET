@@ -6,22 +6,31 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net;
 using Windows.Web.Http.Headers;
+using System.Threading;
+using Windows.Gaming.Input;
+using System.Diagnostics;
+using Windows.ApplicationModel.UserDataTasks.DataProvider;
 
 namespace CountdownTimer.Models
 {
-    public static class IoTControl
+    public class IoTControl
     {
+        public int lightStatus;
         public static readonly HttpClient client = new HttpClient( );
 
-        public static async Task<string> SetLightAsync(int lightStatus)
+
+        public async Task<string> SetLightAsync(int _lightStatus)
         {
             string response;
 
             try
             {
-                if ( lightStatus == 0 )
+                lightStatus = _lightStatus;
+                if ( _lightStatus == 0 )
                 {
+                    var cancellationToken = new CancellationTokenSource( );
                     response = await client.GetStringAsync(new Uri(@"http://192.168.1.252:5000/on/saturation/100"));
+                    await Task.Factory.StartNew(async () => await NotSafeAsync(cancellationToken.Token), TaskCreationOptions.LongRunning);
                 }
                 else
                 {
@@ -32,6 +41,27 @@ namespace CountdownTimer.Models
                 response = $"FAILED: {http_e}";
             }
             return response;
+        }
+
+        public async Task NotSafeAsync(CancellationToken _cancellationToken)
+        {
+            try
+            {
+                string msgResponse;
+                while (lightStatus == 0)
+                {
+                    msgResponse = await client.GetStringAsync(new Uri(@"http://192.168.1.162:5000/msg/notsafe"));
+                    Debug.WriteLine($"msgRepsonse = {msgResponse}");
+                }
+                
+                msgResponse = await client.GetStringAsync(new Uri(@"http://192.168.1.162:5000/random"));
+                Debug.WriteLine($"msgRepsonse = {msgResponse}");
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Something bad happened when printing NOTSAFE :(");
+            }
         }
     }
 }

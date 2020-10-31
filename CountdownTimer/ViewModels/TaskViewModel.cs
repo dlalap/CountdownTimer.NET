@@ -23,12 +23,14 @@ namespace CountdownTimer.ViewModels
         private CancellationTokenSource _token;
         private CameraCapture cameraCapture;
         private int lightStatus;
+        private IoTControl iotControl;
 
         public TaskViewModel()
         {
             lightStatus = 1;
             DisplaySize = 400;
             cameraCapture = new CameraCapture( );
+            iotControl = new IoTControl( );
             _task = new CountdownTask( );
             _future = DateTime.Now.AddMinutes(15);
             timerActive = true;
@@ -77,7 +79,7 @@ namespace CountdownTimer.ViewModels
             await cameraCapture.CaptureImageAsync( );
 
             lightStatus = 1;
-            await IoTControl.SetLightAsync(lightStatus);
+            await iotControl.SetLightAsync(lightStatus);
         }
 
         public async Task RunTimerAsync( CancellationToken _token )
@@ -92,7 +94,7 @@ namespace CountdownTimer.ViewModels
                     {
                         lightStatus = 0;
                         DisplaySize = 800;
-                        await IoTControl.SetLightAsync(lightStatus);
+                        await iotControl.SetLightAsync(lightStatus);
                     }
 
                     await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
